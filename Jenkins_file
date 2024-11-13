@@ -1,12 +1,15 @@
 pipeline {
-  agent none
-  stages {
+  agent any // This sets a global agent for the entire pipeline
 
-    stage("build & SonarQube Analysis") {
-      agent any
+  tools {
+    maven 'maven' // Specify the Maven installation name from Jenkins Global Tool Configuration
+  }
+
+  stages {
+    stage("Build & SonarQube Analysis") {
       steps {
         withSonarQubeEnv('Sonar_Qube') {
-          bat 'mvn clean package sonar:sonar'
+          bat 'mvn clean package sonar:sonar' // Run the Maven command
         }
       }
     }
